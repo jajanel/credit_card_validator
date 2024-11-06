@@ -1,12 +1,26 @@
+import { useRef } from "react";
+
 export default function Validator() {
 
     function dateFormat(date) {
         return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
     }
 
+    let firstNameRef = useRef()
+
     const handleSubmitForm = (e) => {
-        e.preventDefault();
-        alert("Form submitted")
+        e.preventDefault()
+
+        let dataToSendIDJK = {
+            firstName: firstNameRef.current.value
+            // other shit
+        }
+                
+        fetch("http://127.0.0.1:3000/save", {
+            method: 'POST',
+            body:JSON.stringify(dataToSendIDJK),
+            headers: {'Content-Type': 'application/json'}
+        })
     }
 
 
@@ -24,8 +38,7 @@ export default function Validator() {
                     <div className="row mb-5">
                         <div className="col">
                             <div className="form-floating mb-3">
-                                <input type="text" className="form-control rounded-3"
-                                       placeholder="first name"/>
+                                <input ref={firstNameRef} type="text" className="form-control rounded-3" placeholder="first name"/>
                                 <label htmlFor="floatingInput">First Name</label>
                             </div>
                         </div>
@@ -86,7 +99,7 @@ export default function Validator() {
                         </div>
                     </div>
 
-                    <button type="button" className="btn btn-block w-100 btn-success" onSubmit={handleSubmitForm}>Check credit card</button>
+                    <button type="button" className="btn btn-block w-100 btn-success" onClick={handleSubmitForm}>Check credit card</button>
 
                 </div>
 
